@@ -2,20 +2,22 @@
 let is_a = function () {
   this.man = true;
   this.woman = true;
-  //throw non implementation exception.
+  //throw invalid operation exception.
 };
 
 // is_not_a cannot be instantiated.
 let is_not_a = function () {
   this.man = false;
   this.woman = false;
-  //throw non implementation exception.
+  //throw invalid operation exception.
 };
 
+// base obj cannot be instantiated.
 let baseObj = function () {
   this.name;
   this.is_a = is_a;
   this.is_not_a = is_not_a;
+ //throw invalid operation exception.
 };
 
 //Thing
@@ -29,39 +31,79 @@ let Thing = function (name = "") {
   this.parent_of = "";
   this.speech = [""];
   this.arms = [arm];
-  this.arms.length = this.has().arms;
   this.hands = [hand];
-  this.hands.length = this.has().hand;
-  this.head = [head];
-  this.head.length = this.has().head;
+  this.head = head;
 };
 Thing.prototype = Object.create(baseObj.prototype);
+
 Thing.prototype.speak = function (phrase = "") {
   let result = `${this.name} says: ${phrase}!`;
   this.speech.push(result);
   return result;
 };
+
 Thing.prototype.is_the = function () {
   let ans = { parent_of: { joe: "joe", kiwi: "kiwi" } };
-  switch (ans.parent_of) {
-    case ans.parent_of.joe:
-      this.parent_of = ans.parent_of.joe;
-      break;
-    case ans.parent_of.kiwi:
-      this.parent_of = ans.parent_of.kiwi;
-      break;
-  }
   return ans;
 };
+
 Thing.prototype.spoke = function () {
   return this.speech;
 };
-Thing.prototype.has = function (amount = 0) {
-  let result = { arms: amount, head: amount, fingers: amount };
+
+Thing.prototype.can = function () {
+  let result = {
+    speak:
+      () =>
+      (phrase = "") =>
+        `${this.name} says: ${phrase}!`,
+    speak: () => ("spoke", (phrase = "") => `${this.name} says: ${phrase}!`),
+  };
   return result;
 };
-Thing.prototype.having = function (amount = 0) {
-  let result = { arms: amount, head: amount, fingers: amount, hands: amount };
+
+Thing.prototype.has = function (amount = 0) {
+  let arms = (amount) => {
+    let element = [arm];
+    for (let i = 0; i < amount; i++) {
+      element.push(new arm());
+    }
+    if (element.length > 1) return element;
+    return new arm();
+  };
+
+  let fingers = (amount) => {
+    let element = [finger];
+    for (let i = 0; i < amount; i++) {
+      element.push(new finger());
+    }
+    if (element.length > 1) return element;
+    return new finger();
+  };
+
+  let hands = (amount) => {
+    let element = [hand];
+    for (let i = 0; i < amount; i++) {
+      element.push(new hand());
+    }
+    if (element.length > 1) return element;
+    return new hand();
+  };
+
+  let he = (amount) => {
+    let element = [head];
+    for (let i = 0; i < amount; i++) {
+      element.push(new head());
+    }
+    if (element.length > 1) return element;
+    return new head();
+  };
+  let result = {
+    arms: (this.arms = arms()),
+    head: (this.head = he()),
+    fingers: fingers(),
+    hands: (this.hands = hands()),
+  };
   return result;
 };
 
@@ -85,7 +127,19 @@ let hand = function () {
 };
 hand.prototype = Object.create(Thing.prototype);
 hand.prototype.having = function (amount = 0) {
-  let result = { fingers: amount, palm: amount };
+  let fingers = (amount) => {
+    let element = [eye];
+    for (let i = 0; i < amount; i++) {
+      element.push(new eye());
+    }
+    if (element.length > 1) return element;
+    return new eye();
+  };
+  let result = {
+    eyes: (this.fingers = fingers()),
+    nose: amount,
+    mouth: amount,
+  };
   return result;
 };
 
@@ -101,15 +155,22 @@ let head = function () {
   Thing.call(this);
   this.name = "head";
   this.eyes = [eye];
-  this.eyes.length = this.having().eyes;
 };
 head.prototype = Object.create(Thing.prototype);
 head.prototype.having = function (amount = 0) {
-  let result = { eyes: amount, nose: amount, mouth: amount };
+  let eyes = (amount) => {
+    let element = [eye];
+    for (let i = 0; i < amount; i++) {
+      element.push(new eye());
+    }
+    if (element.length > 1) return element;
+    return new eye();
+  };
+  let result = { eyes: (this.eyes = eyes()), nose: amount, mouth: amount };
   return result;
 };
 
-//Eye
+//eye
 let eye = function () {
   Thing.call(this);
   this.name = "eye";
@@ -118,19 +179,34 @@ let eye = function () {
 };
 eye.prototype = Object.create(Thing.prototype);
 eye.prototype.being_the = function () {
-  let result = "";
-  const color = {
-    red: "red",
-    blue: "blue",
-    green: "green",
+  let result = {
+    color: {
+      red: () => (this.color = "red"),
+      blue: () => (this.color = "blue"),
+      green: () => (this.color = "green"),
+      brown: () => (this.color = "brown"),
+      red: {
+        and_the: {
+          shape: {
+            round: () => ((this.shape = "round"), (this.color = "red")),
+          },
+        },
+      },
+      blue: {
+        and_the: {
+          shape: {
+            round: () => ((this.shape = "round"), (this.color = "blue")),
+          },
+        },
+      },
+      red: {
+        and_the: {
+          shape: {
+            round: () => ((this.shape = "round"), (this.color = "red")),
+          },
+        },
+      },
+    },
   };
-  switch (color) {
-    case red:
-      return color.red;
-    case blue:
-      return color.blue;
-    case green:
-      return color.green;
-  }
-  return color;
+  return result;
 };
