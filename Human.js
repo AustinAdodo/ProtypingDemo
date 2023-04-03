@@ -32,8 +32,8 @@ let Thing = function (name = "") {
   this.arms.length = this.has().arms;
   this.hands = [hand];
   this.hands.length = this.has().hand;
-  this.heads = [head];
-  this.hands.length = this.has().head;
+  this.head = [head];
+  this.head.length = this.has().head;
 };
 Thing.prototype = Object.create(baseObj.prototype);
 Thing.prototype.speak = function (phrase = "") {
@@ -44,10 +44,10 @@ Thing.prototype.speak = function (phrase = "") {
 Thing.prototype.is_the = function () {
   let ans = { parent_of: { joe: "joe", kiwi: "kiwi" } };
   switch (ans.parent_of) {
-    case joe:
+    case ans.parent_of.joe:
       this.parent_of = ans.parent_of.joe;
       break;
-    case kiwi:
+    case ans.parent_of.kiwi:
       this.parent_of = ans.parent_of.kiwi;
       break;
   }
@@ -61,7 +61,7 @@ Thing.prototype.has = function (amount = 0) {
   return result;
 };
 Thing.prototype.having = function (amount = 0) {
-  let result = { arms: amount, head: amount, fingers: amount, hands:amount };
+  let result = { arms: amount, head: amount, fingers: amount, hands: amount };
   return result;
 };
 
@@ -126,14 +126,11 @@ eye.prototype.being_the = function () {
   };
   switch (color) {
     case red:
-      result = color.red;
-      break;
+      return color.red;
     case blue:
-      result = color.blue;
-      break;
+      return color.blue;
     case green:
-      result = color.green;
-      break;
+      return color.green;
   }
-  return result;
+  return color;
 };
