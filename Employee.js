@@ -1,6 +1,7 @@
 //Employee
 // Array.prototype.max = function() {return Math.max.apply(null, this);}
 //Engineer.prototype = Object.assign({}, Employee); //enable newly copied object to point to new memory location.
+
 let Employee = function (level = "", birthyear = 1990) {
   this.title = level;
   this.birthyear = birthyear;
@@ -40,8 +41,8 @@ Engineer.prototype.getIsManager = function () {
 
 let engineerObject = new Engineer("Manager", "true");
 //const usercopy = structuredClone(user); cloning an object called user.
-//class Expatriate
 
+//class Expatriate
 class Expatriate extends Employee {
   constructor(Localcountry = "") {
     this.Basecountry = Localcountry;
@@ -55,28 +56,5 @@ class Expatriate extends Employee {
   };
 }
 
-console.log(
-  `Final Employee Profile - Title ${engineerObject.getTitle()}. ${
-    engineerObject.getIsManager() ? "Is" : "Is not"
-  } a Manager\n`
-);
-console.log(
-  `Engineer.prototype has property setTitle: ${Engineer.prototype.hasOwnProperty(
-    "setTitle"
-  )}\n`
-);
-console.log(
-  `Engineer.prototype has property getTitle: ${Engineer.prototype.hasOwnProperty(
-    "getTitle"
-  )}\n`
-);
-console.log(
-  `Engineer.prototype has property setIsManager: ${Engineer.prototype.hasOwnProperty(
-    "setIsManager"
-  )}\n`
-);
-console.log(
-  `Engineer.prototype has property getIsManager: ${Engineer.prototype.hasOwnProperty(
-    "getIsManager"
-  )}\n`
-);
+let package = {Employee,Expatriate,Engineer};
+module.exports = package;

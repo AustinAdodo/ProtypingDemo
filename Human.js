@@ -56,8 +56,9 @@ class Thing {
         for (let i = 0; i < amount; i++) {
           element.push(new hand("hand"));
         }
-        if (element.length > 1) return element;
-        return new hand("hand");
+        // if (element.length > 1) return element;
+        // return new hand("hand");
+        return element;
       };
   
       let he = (amount) => {
@@ -72,7 +73,7 @@ class Thing {
         arms: (this.arms = arms()),
         head: (this.head = he()),
         fingers: fingers(),
-        hands: () => this.hands = hands(),
+        hands : {hands:() => this.hands = hands(), each: (n) => hands.forEach(e => { })}
       };
       return result;
     }
@@ -202,5 +203,5 @@ function having(amount = 0) {
     };
     return result;
   }
-
-  
+  let package = {Thing, arm, hand, finger, head, eye};
+  module.exports = package;
